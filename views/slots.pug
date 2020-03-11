@@ -1,0 +1,49 @@
+extends layout
+
+block content
+  main#main
+  h1.ui.center.aligned.header Slot Booking List
+  .ui.container
+    form.ui.form(method='POST')
+      div.form-group.fields
+        field.four.wide.field
+          .ui.labeled.input
+            .ui.label Date:
+            input(type='date', name='date', required)
+        field.four.wide.field
+          input(type='text', placeholder='Customer name' name='name', required)
+        field.four.wide.field
+          select.ui.fluid.dropdown(name="number", required)
+            option(value="") Select Slot Number
+            each slot in ['0900','0930','1000','1030','1100','1130','1200','1230','1300','1330','1400','1430','1500','1530','1600','1630','1700','1730']
+              option(value=slot) #{slot}
+        field.four.wide.field
+          button.ui.button(type='submit') Book
+          button.ui.button(type='button', onclick="window.location.href=window.location.href") Refresh
+    if message
+      .ui.negative.message.red
+        i.close.icon(onclick="document.querySelector('.message').classList.add('hidden')")
+        .header Error
+        p #{message}
+    table.ui.striped.celled.table.center.aligned
+      thead
+        tr
+          th(class="two wide column")= "No"
+          th(class="two wide column")= "Date"
+          th(class="two wide column")= "Slots"
+          th(class="ten wide column")= "Name"
+      tbody
+        each item, idx in data 
+          tr
+            td= idx+1
+            td= item.date
+            td= item.number
+            td= item.name
+        else
+          tr
+            td(colspan='4') No data available
+      tfoot
+        tr
+          th(colspan='4')
+
+
